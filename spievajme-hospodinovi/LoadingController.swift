@@ -73,29 +73,35 @@ class LoadingController: UIViewController {
         
         activityIndicator.startAnimating()
         
-        if !SongStore.shared.isLoaded() {
-            self.statusLabel.text = "Inicializujem databázu..."
-            
-            DispatchQueue.global(qos: .background).async {
-                let songs = parseSongsFromXMLArchive()
-                
-                SongStore.shared.persist(songs: songs)
-                
+        DispatchQueue.global(qos: .background).async {
+            if !SongStoreCoreData.shared.isLoaded() {
                 DispatchQueue.main.async {
-                    
-                    self.activityIndicator.stopAnimating()
-                    self.statusLabel.text = ""
-                    
-                    self.finish(loadedSongs: songs)
+                    self.statusLabel.text = "Inicializujem databázu..."
                 }
-            }
-        } else {
-            self.statusLabel.text = "Načítavam spevník..."
+                
+                let songs = parseSongsFromXMLArchive()
             
-            DispatchQueue.global(qos: .background).async {
-                let songs = SongStore.shared.getAllSongs()
+                SongStoreCoreData.shared.persist(from: songs, completion: { (songs) in
+                    DispatchQueue.main.async {
+                        
+                        print(">>>>> \(Date().timeIntervalSince(start))")
+                        
+                        self.activityIndicator.stopAnimating()
+                        self.statusLabel.text = ""
+                        
+                        self.finish(loadedSongs: songs)
+                    }
+                })
+            } else {
+                DispatchQueue.main.async {
+                    self.statusLabel.text = "Načítavam spevník..."
+                }
+                
+                let songs = SongStoreCoreData.shared.getAllSongs()
                 
                 DispatchQueue.main.async {
+                    
+                    print(">>>>> \(Date().timeIntervalSince(start))")
                     
                     self.activityIndicator.stopAnimating()
                     self.statusLabel.text = ""

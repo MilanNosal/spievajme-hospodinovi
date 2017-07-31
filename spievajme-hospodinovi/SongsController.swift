@@ -60,14 +60,17 @@ class SongsController: UITableViewController {
             } else {
                 filteredSongs = songs.filter({ (song) -> Bool in
                     
-                    if song.title.lowercased().contains(searchedString) {
+                    if song.title!.lowercased().contains(searchedString) {
                         return true
                     }
                     
-                    for verse in song.verses {
-                        let flattedVerse = verse.lines.joined(separator: " ").lowercased()
+                    for verse in song.verses! {
+                        let verse = verse as! Verse
+                        let flattenedVerse = verse.lines!.map({ (line) -> String in
+                            return (line as! Line).text!
+                        }).joined(separator: " ").lowercased()
                         
-                        if flattedVerse.contains(searchedString) {
+                        if flattenedVerse.contains(searchedString) {
                             return true
                         }
                     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-func parseSongsFromXMLArchive() -> [Song] {
+func parseSongsFromXMLArchive() -> [SongStub] {
     if let data = NSDataAsset(name: "spevnik")?.data {
         let parser = XMLParser(data: data)
         let sp = SongsXMLParser()
@@ -16,7 +16,29 @@ func parseSongsFromXMLArchive() -> [Song] {
         parser.parse()
         return sp.songs
     } else {
-        return [Song]()
+        return [SongStub]()
+    }
+}
+
+struct SongStub {
+    var number: Int
+    var title: String
+    var verses: [VerseStub]
+    
+    init(number: Int, title: String, verses: [VerseStub]) {
+        self.number = number
+        self.title = title
+        self.verses = verses
+    }
+}
+
+struct VerseStub {
+    var number: String
+    var lines: [String]
+    
+    init(number: String, lines: [String]) {
+        self.number = number
+        self.lines = lines
     }
 }
 
@@ -29,10 +51,10 @@ enum SupportedTags: String {
 
 class SongsXMLParser: NSObject, XMLParserDelegate {
     
-    var songs = [Song]()
+    var songs = [SongStub]()
     var currentSongNumber: Int?
     var currentSongTitle: String?
-    var currentSongVerses: [Verse]?
+    var currentSongVerses: [VerseStub]?
     
     var currentTag: SupportedTags? = nil
     
@@ -57,7 +79,7 @@ class SongsXMLParser: NSObject, XMLParserDelegate {
             if currentSongVerses == nil {
                 currentSongVerses = []
             }
-            let verse = Verse(number: attributeDict["vnumber"] ?? "", lines: [])
+            let verse = VerseStub(number: attributeDict["vnumber"] ?? "", lines: [])
             currentSongVerses!.append(verse)
             
             currentTag = .verse
@@ -126,7 +148,7 @@ class SongsXMLParser: NSObject, XMLParserDelegate {
                 let songTitle = currentSongTitle,
                 let verses = currentSongVerses
             {
-                let song = Song(number: songNumber, title: songTitle, verses: verses)
+                let song = SongStub(number: songNumber, title: songTitle, verses: verses)
                 songs.append(song)
                 
                 currentSongNumber = nil

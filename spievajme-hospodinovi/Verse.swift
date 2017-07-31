@@ -8,30 +8,12 @@
 
 import Foundation
 
-class Verse: NSObject, NSCoding {
-    var number: String = ""
-    var lines: [String] = []
+extension Verse: ManagedObjectType {
     
-    override init() {
-        super.init()
-    }
+    static var entityName: String = "Verse"
     
-    convenience init(number: String, lines: [String]) {
-        self.init()
-        self.number = number
-        self.lines = lines
-    }
-    
-    // MARK: NSCoding implementation
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(number, forKey: "number")
-        aCoder.encode(lines, forKey: "lines")
-    }
-    
-    convenience required init?(coder aDecoder: NSCoder) {
-        self.init()
-        
-        self.number = aDecoder.decodeObject(forKey: "number") as! String
-        self.lines = aDecoder.decodeObject(forKey: "lines") as! [String]
+    static var defaultSortDescriptors: [NSSortDescriptor] {
+        return [NSSortDescriptor(key: "number", ascending: true)]
     }
 }
+
