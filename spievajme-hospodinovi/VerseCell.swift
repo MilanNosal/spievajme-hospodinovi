@@ -16,7 +16,9 @@ class VerseCell: UITableViewCell {
     
     var verse: Verse! {
         didSet {
-            verseLabel.text = verse.lines.joined(separator: "\n")
+            verseLabel.text = verse.lines!.map({ (line) -> String in
+                return (line as! Line).text!
+            }).joined(separator: "\n")
         }
     }
     

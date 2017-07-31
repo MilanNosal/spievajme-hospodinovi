@@ -31,7 +31,7 @@ class SongController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return song.verses.count
+        return song.verses!.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,13 +39,13 @@ class SongController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return song.verses[section].number
+        return (song.verses![section] as! Verse).number
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: VerseCell.identifier) as! VerseCell
-        cell.verse = song.verses[indexPath.section]
+        cell.verse = song.verses![indexPath.section] as! Verse
         return cell
         
     }
