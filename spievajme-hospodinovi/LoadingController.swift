@@ -82,7 +82,7 @@ class LoadingController: UIViewController {
                 SongStore.shared.persist(songs: songs)
                 
                 DispatchQueue.main.async {
-                    
+                    print(">>>>> \(Date().timeIntervalSince(start))")
                     self.activityIndicator.stopAnimating()
                     self.statusLabel.text = ""
                     
@@ -96,6 +96,7 @@ class LoadingController: UIViewController {
                 let songs = SongStore.shared.getAllSongs()
                 
                 DispatchQueue.main.async {
+                    print(">>>>> \(Date().timeIntervalSince(start))")
                     
                     self.activityIndicator.stopAnimating()
                     self.statusLabel.text = ""
