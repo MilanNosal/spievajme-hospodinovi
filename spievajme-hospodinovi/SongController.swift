@@ -12,12 +12,15 @@ class SongController: UITableViewController {
     
     var song: Song! {
         didSet {
-            self.navigationItem.title = song.title
-            navigationItem.rightBarButtonItem = UIBarButtonItem()
-            navigationItem.rightBarButtonItem?.title = String(song.number)
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-            
-            self.tableView.reloadData()
+            if song.number != oldValue.number {
+                self.navigationItem.title = song.title
+                navigationItem.rightBarButtonItem = UIBarButtonItem()
+                navigationItem.rightBarButtonItem?.title = String(song.number)
+                navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+                
+                self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
         }
     }
     
