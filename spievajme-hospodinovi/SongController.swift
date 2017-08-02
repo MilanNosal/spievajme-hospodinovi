@@ -12,7 +12,7 @@ class SongController: UITableViewController {
     
     var song: Song! {
         didSet {
-            if song.number != oldValue.number {
+            if song.number != oldValue?.number {
                 self.navigationItem.title = song.title
                 navigationItem.rightBarButtonItem = UIBarButtonItem()
                 navigationItem.rightBarButtonItem?.title = String(song.number)
