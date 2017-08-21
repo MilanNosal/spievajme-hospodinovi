@@ -72,12 +72,13 @@ class LoadingController: UIViewController {
         activityIndicator.startAnimating()
         
         DispatchQueue.global(qos: .background).async {
+            
             if !SongStoreCoreData.shared.isLoaded() {
                 DispatchQueue.main.async {
                     self.statusLabel.text = "Inicializujem databázu..."
                 }
                 
-                let songs = parseSongsFromXMLArchive()
+                let songs = parseSongsFromArchive()
             
                 SongStoreCoreData.shared.persist(from: songs, completion: { (songs) in
                     DispatchQueue.main.async {

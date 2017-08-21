@@ -14,13 +14,13 @@
 		99090D1B1D47E7C900A9E2A4 /* SongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99090D1A1D47E7C900A9E2A4 /* SongsController.swift */; };
 		99090D1D1D47EA0200A9E2A4 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99090D1C1D47EA0200A9E2A4 /* Song.swift */; };
 		99149E4F1F2E096A00CB38DD /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149E4E1F2E096A00CB38DD /* LoadingController.swift */; };
-		99152BB31F2DEB7A00520086 /* SongsXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99152BB21F2DEB7A00520086 /* SongsXMLParser.swift */; };
 		991D52191F2E7C9300E0C1F8 /* spevnik.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 991D52171F2E7C9300E0C1F8 /* spevnik.xcdatamodeld */; };
 		9921429E1F2F96020061F895 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921429D1F2F96020061F895 /* Line.swift */; };
 		992142A01F2F977D0061F895 /* SongStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921429F1F2F977D0061F895 /* SongStore.swift */; };
 		993019651D49325100DE2DCE /* VerseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993019641D49325100DE2DCE /* VerseCell.swift */; };
 		993A49921F2E7BD60001F93A /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993A49911F2E7BD60001F93A /* ManagedObject.swift */; };
 		994D7D6C1F2DE37A00A575F8 /* Verse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994D7D6B1F2DE37A00A575F8 /* Verse.swift */; };
+		99656B0E1F4B511F004AE8C9 /* ArchiveParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99656B0D1F4B511F004AE8C9 /* ArchiveParser.swift */; };
 		998FDD7F1F2DF7A3007204C6 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998FDD7E1F2DF7A3007204C6 /* ArrayExtensions.swift */; };
 		998FDD811F2DF7BE007204C6 /* NSLayoutConstraintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998FDD801F2DF7BE007204C6 /* NSLayoutConstraintExtensions.swift */; };
 		999654841D47F597001ED726 /* SongStoreCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999654831D47F597001ED726 /* SongStoreCoreData.swift */; };
@@ -38,13 +38,13 @@
 		99090D1A1D47E7C900A9E2A4 /* SongsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsController.swift; sourceTree = "<group>"; };
 		99090D1C1D47EA0200A9E2A4 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		99149E4E1F2E096A00CB38DD /* LoadingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingController.swift; sourceTree = "<group>"; };
-		99152BB21F2DEB7A00520086 /* SongsXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsXMLParser.swift; sourceTree = "<group>"; };
 		991D52181F2E7C9300E0C1F8 /* spevnik.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = spevnik.xcdatamodel; sourceTree = "<group>"; };
 		9921429D1F2F96020061F895 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		9921429F1F2F977D0061F895 /* SongStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStore.swift; sourceTree = "<group>"; };
 		993019641D49325100DE2DCE /* VerseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerseCell.swift; sourceTree = "<group>"; };
 		993A49911F2E7BD60001F93A /* ManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
 		994D7D6B1F2DE37A00A575F8 /* Verse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verse.swift; sourceTree = "<group>"; };
+		99656B0D1F4B511F004AE8C9 /* ArchiveParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveParser.swift; sourceTree = "<group>"; };
 		998FDD7E1F2DF7A3007204C6 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		998FDD801F2DF7BE007204C6 /* NSLayoutConstraintExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtensions.swift; sourceTree = "<group>"; };
 		999654831D47F597001ED726 /* SongStoreCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongStoreCoreData.swift; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				9921429D1F2F96020061F895 /* Line.swift */,
 				9921429F1F2F977D0061F895 /* SongStore.swift */,
 				999654831D47F597001ED726 /* SongStoreCoreData.swift */,
-				99152BB21F2DEB7A00520086 /* SongsXMLParser.swift */,
+				99656B0D1F4B511F004AE8C9 /* ArchiveParser.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -214,13 +214,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				993A49921F2E7BD60001F93A /* ManagedObject.swift in Sources */,
-				99152BB31F2DEB7A00520086 /* SongsXMLParser.swift in Sources */,
 				993019651D49325100DE2DCE /* VerseCell.swift in Sources */,
 				99ECEAA81D480688006EFCB7 /* SongController.swift in Sources */,
 				99149E4F1F2E096A00CB38DD /* LoadingController.swift in Sources */,
 				99090D1D1D47EA0200A9E2A4 /* Song.swift in Sources */,
 				991D52191F2E7C9300E0C1F8 /* spevnik.xcdatamodeld in Sources */,
 				99090D1B1D47E7C900A9E2A4 /* SongsController.swift in Sources */,
+				99656B0E1F4B511F004AE8C9 /* ArchiveParser.swift in Sources */,
 				999654841D47F597001ED726 /* SongStoreCoreData.swift in Sources */,
 				9921429E1F2F96020061F895 /* Line.swift in Sources */,
 				99ECEAA61D47F963006EFCB7 /* SongCell.swift in Sources */,
@@ -301,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -352,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -369,7 +369,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "spievajme-hospodinovi/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.svagant.spievajme-hospodinovi";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -387,7 +387,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "spievajme-hospodinovi/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.svagant.spievajme-hospodinovi";
 				PRODUCT_NAME = "$(TARGET_NAME)";

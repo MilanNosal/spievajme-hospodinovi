@@ -6,8 +6,7 @@
   "data" : [
     {
       "idiom" : "universal",
-      "filename" : "spevnik.xml",
-      "universal-type-identifier" : "public.xml"
+      "filename" : "spevnik.json"
     }
   ]
 }
