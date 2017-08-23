@@ -15,6 +15,20 @@ let numpadNumberButtonsVerticalSpacing = UIScreen.main.bounds.width / 20
 
 class NumberButton: UIButton {
     
+    var foregroundColor: UIColor = .black {
+        didSet {
+            self.layer.borderColor = foregroundColor.cgColor
+            self.setTitleColor(foregroundColor, for: .normal)
+            self.setBackgroundColor(color: foregroundColor.withAlphaComponent(0.4), for: UIControlState.highlighted)
+        }
+    }
+    
+    var buttonBackgroundColor: UIColor = .white {
+        didSet {
+            self.setBackgroundColor(color: buttonBackgroundColor, for: .normal)
+        }
+    }
+    
     init(number: Int) {
         super.init(frame: CGRect.zero)
         
@@ -22,14 +36,14 @@ class NumberButton: UIButton {
         
         self.clipsToBounds = true
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = foregroundColor.cgColor
         self.layer.cornerRadius = numpadNumberButtonSize / 2
-        self.setTitleColor(.black, for: .normal)
+        self.setTitleColor(foregroundColor, for: .normal)
         self.setTitle("\(number)", for: .normal)
         self.titleLabel?.font = UIFont.systemFont(ofSize: numpadNumberButtonSize / 2, weight: .light)
         
-        self.setBackgroundColor(color: UIColor.white, for: .normal)
-        self.setBackgroundColor(color: UIColor.black.withAlphaComponent(0.4), for: UIControlState.highlighted)
+        self.setBackgroundColor(color: buttonBackgroundColor, for: .normal)
+        self.setBackgroundColor(color: foregroundColor.withAlphaComponent(0.4), for: UIControlState.highlighted)
         
         self.translatesAutoresizingMaskIntoConstraints = false
         [
@@ -57,6 +71,12 @@ class NumpadViewController: UIViewController {
     
     fileprivate let inputLabel = UILabel()
     
+    var text: String = "" {
+        didSet {
+            inputLabel.text = text
+        }
+    }
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -73,7 +93,6 @@ class NumpadViewController: UIViewController {
         setupInitialLayout()
         
         view.layoutIfNeeded()
-        
         
         let gr = UITapGestureRecognizer(target: self, action: #selector(NumpadViewController.outsideTapHappening(sender:)))
         view.addGestureRecognizer(gr)
@@ -101,10 +120,39 @@ class NumpadViewController: UIViewController {
         inputLabel.layer.cornerRadius = 4
         inputLabel.textAlignment = .center
         
-        inputLabel.text = ""
+        text = "0"
         
         numberButtons[10].setTitle("←", for: .normal)
-//        numberButtons[10].setBackgroundColor(color: <#T##UIColor#>, for: <#T##UIControlState#>)
+        numberButtons[10].foregroundColor = .red
+        
+        for numberButton in numberButtons {
+            numberButton.addTarget(self, action: #selector(numberButtonPressed(_:)), for: .touchUpInside)
+        }
+        
+    }
+    
+    @objc fileprivate func numberButtonPressed(_ sender: NumberButton) {
+        let textLength = text.characters.count
+        
+        if sender.tag == 10 {
+            if textLength > 0 {
+                let newLastIndex = text.index(text.startIndex, offsetBy: textLength - 1)
+                let newText = text.substring(to: newLastIndex)
+                text = newText.isEmpty ? "0" : newText
+            }
+            return
+        }
+        
+        if text == "0" {
+            if sender.tag != 0 {
+                text = "\(sender.tag)"
+            }
+            return
+        }
+        
+        if textLength < 6 {
+            text = "\(text)\(sender.tag)"
+        }
     }
     
     private func setupInitialLayout() {
