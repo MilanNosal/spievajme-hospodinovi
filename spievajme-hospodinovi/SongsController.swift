@@ -47,6 +47,36 @@ class SongsController: UITableViewController {
         
         self.title = "Spievajme Hospodinovi"
         
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        
+        setupToolbar()
+    }
+    
+    fileprivate func setupToolbar() {
+        
+        let settings = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: nil)
+        let info = UIBarButtonItem(image: #imageLiteral(resourceName: "infoEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: nil)
+        let search = UIBarButtonItem(image: #imageLiteral(resourceName: "searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
+        let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
+        
+        navigationController?.toolbar.tintColor = UIColor.black.withAlphaComponent(0.8)
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        
+        toolbarItems = [spacer, settings, spacer, spacer, spacer, info, spacer, spacer, spacer, search, spacer, spacer, spacer, quickSearch, spacer]
+        
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
+    @objc fileprivate func searchSelected() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
+    @objc fileprivate func quickSearchPressed() {
+        NumpadViewController.show(answeredCallback: { (controller, songNumber) in
+            
+        }, dismissalCallback: nil)
     }
     
     func filterSongs(searchString: String?) {
