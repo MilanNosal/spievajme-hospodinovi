@@ -16,14 +16,13 @@ class SongsController: UITableViewController {
     fileprivate var songs: [Song]
     fileprivate var filteredSongs: [Song] = []
     
+    fileprivate let quickSearch = QuickSearch(limit: (lower: 1, upper: 400))
+    
     init(style: UITableViewStyle, songs: [Song]) {
-        
         self.songs = songs
-        
         songController = SongController(style: .plain)
-        
         super.init(style: style)
-        
+        quickSearch.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,9 +73,7 @@ class SongsController: UITableViewController {
     }
     
     @objc fileprivate func quickSearchPressed() {
-        NumpadViewController.show(answeredCallback: { (controller, songNumber) in
-            
-        }, dismissalCallback: nil)
+        quickSearch.present(in: self)
     }
     
     func filterSongs(searchString: String?) {
@@ -159,5 +156,12 @@ extension SongsController: UISearchResultsUpdating {
     
     func updateSearchResults(for: UISearchController) {
         filterSongs(searchString: searchController.searchBar.text)
+    }
+}
+
+extension SongsController: QuickSearchDelegate {
+    func quickSearchDidSelect(number: Int) {
+        songController.song = songs[number - 1]
+        self.navigationController?.pushViewController(songController, animated: true)
     }
 }
