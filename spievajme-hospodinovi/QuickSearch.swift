@@ -26,7 +26,7 @@ class QuickSearch: NSObject, UITextFieldDelegate {
     }
     
     func present(in viewController: UIViewController) {
-        let quickSearchController = UIAlertController(title: "Skoč na pieseň", message: "Zadajte číslo piesne (\(limit.lower) - \(limit.upper)", preferredStyle: .alert)
+        let quickSearchController = UIAlertController(title: "Skoč na pieseň", message: "Zadaj číslo piesne (\(limit.lower) - \(limit.upper))", preferredStyle: .alert)
         quickSearchController.addTextField { (textField) in
             textField.keyboardType = .numberPad
             textField.delegate = self
