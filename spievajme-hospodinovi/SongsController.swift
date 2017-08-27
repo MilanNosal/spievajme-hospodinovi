@@ -23,10 +23,26 @@ class SongsController: UITableViewController {
         songController = SongController(style: .plain)
         super.init(style: style)
         quickSearch.delegate = self
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveSHNotification(notification:)),
+                                               name: SHNotification.settingsChanged.notificationName,
+                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc fileprivate func receiveSHNotification(notification: NSNotification) {
+        switch SHNotification(rawValue: notification.name.rawValue)! {
+        case .settingsChanged:
+            songController.song = nil
+        }
     }
     
     override func viewDidLoad() {
@@ -46,15 +62,13 @@ class SongsController: UITableViewController {
         
         self.title = "Spievajme Hospodinovi"
         
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-        
         setupToolbar()
     }
     
     fileprivate func setupToolbar() {
         
-        let settings = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: nil)
-        let info = UIBarButtonItem(image: #imageLiteral(resourceName: "infoEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: nil)
+        let settings = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(settingsSelected))
+        let info = UIBarButtonItem(image: #imageLiteral(resourceName: "infoEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(infoSelected))
         let search = UIBarButtonItem(image: #imageLiteral(resourceName: "searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
         let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
         
@@ -65,6 +79,19 @@ class SongsController: UITableViewController {
         toolbarItems = [spacer, settings, spacer, spacer, spacer, info, spacer, spacer, spacer, search, spacer, spacer, spacer, quickSearch, spacer]
         
         navigationController?.setToolbarHidden(false, animated: false)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
+    
+    @objc fileprivate func settingsSelected() {
+        let settingsController = SettingsViewController(style: .grouped)
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func infoSelected() {
+        let infoController = AboutViewController(style: .grouped)
+        let navController = UINavigationController(rootViewController: infoController)
+        present(navController, animated: true, completion: nil)
     }
     
     @objc fileprivate func searchSelected() {

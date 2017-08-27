@@ -10,19 +10,64 @@ import UIKit
 
 class SongController: UITableViewController {
     
-    var song: Song! {
+    var song: Song? {
         didSet {
-            if song.number != oldValue?.number {
-                self.navigationItem.title = song.title
-                navigationItem.rightBarButtonItem = UIBarButtonItem()
-                navigationItem.rightBarButtonItem?.title = String(song.number)
-                navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-                
-                self.tableView.reloadData()
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            if let song = song {
+                if song.number != oldValue?.number {
+                    self.navigationItem.title = song.title
+                    navigationItem.rightBarButtonItem = UIBarButtonItem()
+                    navigationItem.rightBarButtonItem?.title = String(song.number)
+                    navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+                    
+                    let lineSeparator = "\n"
+                    
+                    if UserDefaults.standard.refrainsWithVerses {
+                        parseVersesWithRefrains(song: song, lineSeparator: lineSeparator)
+                    } else {
+                        parseVersesWithSeparateRefrains(song: song, lineSeparator: lineSeparator)
+                    }
+                    
+                    self.tableView.reloadData()
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             }
         }
     }
+    
+    fileprivate func parseVersesWithSeparateRefrains(song: Song, lineSeparator: String) {
+        verses.removeAll()
+        for verse in song.verses! {
+            let verse = verse as! Verse
+            let verseText = verse.lines!.map({ (line) -> String in
+                return (line as! Line).text!
+            }).joined(separator: lineSeparator)
+            
+            verses.append((title: verse.number ?? "", text: verseText))
+        }
+    }
+    
+    fileprivate func parseVersesWithRefrains(song: Song, lineSeparator: String) {
+        verses.removeAll()
+        for verse in song.verses! {
+            let currentIndex = verses.count - 1
+            let verse = verse as! Verse
+            let verseText = verse.lines!.map({ (line) -> String in
+                return (line as! Line).text!
+            }).joined(separator: lineSeparator)
+            
+            if verse.number == "Ref" {
+                if currentIndex < 0 {
+                    verses.append((title: "Ref", text: "[Ref] \(verseText)"))
+                } else {
+                    verses[currentIndex].text.append("\(lineSeparator)[Ref] \(verseText)")
+                }
+            } else {
+                verses.append((title: verse.number ?? "", text: verseText))
+            }
+        }
+    }
+    
+    fileprivate var verses: [(title: String, text: String)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +78,19 @@ class SongController: UITableViewController {
         tableView.estimatedRowHeight = 35
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return song.verses!.count
+        return verses.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,14 +98,12 @@ class SongController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return (song.verses![section] as! Verse).number
+        return verses[section].title
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: VerseCell.identifier) as! VerseCell
-        cell.verse = song.verses![indexPath.section] as! Verse
+        cell.verse = verses[indexPath.section].text
         return cell
-        
     }
 }

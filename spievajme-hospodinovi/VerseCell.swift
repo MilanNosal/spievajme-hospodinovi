@@ -14,11 +14,9 @@ class VerseCell: UITableViewCell {
     
     private let verseLabel: UILabel = UILabel()
     
-    var verse: Verse! {
+    var verse: String! {
         didSet {
-            verseLabel.text = verse.lines!.map({ (line) -> String in
-                return (line as! Line).text!
-            }).joined(separator: "\n")
+            verseLabel.text = verse
         }
     }
     
@@ -37,7 +35,7 @@ class VerseCell: UITableViewCell {
     fileprivate func setupInitialAttributes() {
         verseLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
         verseLabel.text = "NONE"
-        verseLabel.textAlignment = .justified
+        verseLabel.textAlignment = .left
         verseLabel.numberOfLines = 0
     }
     
