@@ -21,6 +21,7 @@ import UIKit
 class SettingsViewController: UITableViewController {
     
     fileprivate let separateRefrainsCell = SeparateRefrainsCell()
+    fileprivate let wrappedVersesCell = WrappedVersesCell()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
 //    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -55,7 +56,13 @@ class SettingsViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
-            return separateRefrainsCell
+            if indexPath.row == 0 {
+                return wrappedVersesCell
+            }
+            if indexPath.row == 1 {
+                return separateRefrainsCell
+            }
+            fatalError()
         default:
             fatalError()
         }
@@ -118,7 +125,63 @@ extension SettingsViewController {
                 
                 refrainSwitch.centerYAnchor.constraint(equalTo: label.centerYAnchor),
                 refrainSwitch.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-            ].activate()
+                ].activate()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+    }
+}
+
+extension SettingsViewController {
+    class WrappedVersesCell: UITableViewCell {
+        static let identifier = "SettingsViewController.WrappedVersesCell"
+        
+        fileprivate let label = UILabel()
+        fileprivate let verseSwitch = UISwitch()
+        
+        init() {
+            super.init(style: .default, reuseIdentifier: nil)
+            
+            setupInitialHierarchy()
+            setupInitialAttributes()
+            setupInitialLayout()
+        }
+        
+        private func setupInitialHierarchy() {
+            contentView.addSubview(label)
+            contentView.addSubview(verseSwitch)
+        }
+        
+        private func setupInitialAttributes() {
+            label.textAlignment = .left
+            label.text = "Zalomené riadky vo veršoch"
+            
+            verseSwitch.isOn = !UserDefaults.standard.verseAsContinuousText
+            
+            verseSwitch.addTarget(self, action: #selector(switchSwitched), for: .valueChanged)
+        }
+        
+        @objc private func switchSwitched() {
+            UserDefaults.standard.verseAsContinuousText = !verseSwitch.isOn
+            NotificationCenter.default.post(name: SHNotification.settingsChanged.notificationName, object: nil)
+        }
+        
+        private func setupInitialLayout() {
+            label.translatesAutoresizingMaskIntoConstraints = false
+            verseSwitch.translatesAutoresizingMaskIntoConstraints = false
+            [
+                label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
+                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+                
+                verseSwitch.leftAnchor.constraint(equalTo: label.rightAnchor, constant: 4),
+                
+                verseSwitch.centerYAnchor.constraint(equalTo: label.centerYAnchor),
+                verseSwitch.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+                ].activate()
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -138,6 +201,17 @@ extension UserDefaults {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: UserDefaults.refrainsWithVersesKey)
+        }
+    }
+    
+    private static let verseAsContinuousTextKey = "org.milan.nosal.verseAsContinuousText"
+    
+    var verseAsContinuousText: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: UserDefaults.verseAsContinuousTextKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaults.verseAsContinuousTextKey)
         }
     }
     

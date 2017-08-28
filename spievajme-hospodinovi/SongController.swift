@@ -19,7 +19,7 @@ class SongController: UITableViewController {
                     navigationItem.rightBarButtonItem?.title = String(song.number)
                     navigationItem.rightBarButtonItem?.tintColor = UIColor.black
                     
-                    let lineSeparator = "\n"
+                    let lineSeparator = UserDefaults.standard.verseAsContinuousText ? " / " : "\n"
                     
                     if UserDefaults.standard.refrainsWithVerses {
                         parseVersesWithRefrains(song: song, lineSeparator: lineSeparator)
