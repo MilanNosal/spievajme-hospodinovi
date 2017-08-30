@@ -41,7 +41,7 @@ class SongsController: UITableViewController {
     @objc fileprivate func receiveSHNotification(notification: NSNotification) {
         switch SHNotification(rawValue: notification.name.rawValue)! {
         case .settingsChanged:
-            songController.song = nil
+            songController.songModel = nil
         }
     }
     
@@ -169,9 +169,9 @@ class SongsController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if searchController.isActive {
-            songController.song = filteredSongs[indexPath.row]
+            songController.songModel = SongModel(song: filteredSongs[indexPath.row])
         } else {
-            songController.song = songs[indexPath.row]
+            songController.songModel = SongModel(song: songs[indexPath.row])
         }
         
         self.navigationController?.pushViewController(songController, animated: true)
@@ -188,7 +188,7 @@ extension SongsController: UISearchResultsUpdating {
 
 extension SongsController: QuickSearchDelegate {
     func quickSearchDidSelect(number: Int) {
-        songController.song = songs[number - 1]
+        songController.songModel = SongModel(song: songs[number - 1])
         self.navigationController?.pushViewController(songController, animated: true)
     }
 }

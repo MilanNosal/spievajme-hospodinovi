@@ -92,7 +92,7 @@ extension AboutViewController {
         
         var content: String = "" {
             didSet {
-                let enhancedString = "\(content)<style>body{font-family: '\(contentLabel.font.familyName)'; font-size:\(contentLabel.font.pointSize)px;}</style"
+                let enhancedString = "\(content)<style>body{font-family: '\(contentLabel.font.familyName)'; font-size:\(contentLabel.font.pointSize)px;}</style>"
                 if let data = enhancedString.data(using: .unicode) {
                     do {
                         let options: [NSAttributedString.DocumentReadingOptionKey : Any] = [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html]
