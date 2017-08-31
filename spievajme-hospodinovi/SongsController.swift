@@ -95,12 +95,6 @@ class SongsController: UITableViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    @objc fileprivate func infoSelected() {
-        let infoController = AboutViewController(style: .grouped)
-        let navController = UINavigationController(rootViewController: infoController)
-        present(navController, animated: true, completion: nil)
-    }
-    
     @objc fileprivate func searchSelected() {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         searchController.searchBar.becomeFirstResponder()

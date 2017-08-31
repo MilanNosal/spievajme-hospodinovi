@@ -186,8 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				998D78211F532C38007B9980 /* QuickSearch.swift */,
-				997104EB1F5346C1005570D9 /* AboutViewController.swift */,
 				99D7E8791F535B830080E904 /* SettingsViewController.swift */,
+				997104EB1F5346C1005570D9 /* AboutViewController.swift */,
 			);
 			name = Auxilliary;
 			sourceTree = "<group>";

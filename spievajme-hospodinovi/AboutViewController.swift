@@ -10,45 +10,62 @@ import UIKit
 
 class AboutViewController: UITableViewController {
     
-    fileprivate let aboutInfo: [(header: HeaderView, text: String)] = [
-        (header: HeaderView(header: ""), text: "<b><i>\"Spievajte Hospodinovi novú pieseň, chválospev o ňom v zhromaždení zbožných.\"</i></b> Žalm 149:1\n\n<br/><br/>Spievajme Hospodinovi je zbierka duchovných piesní pôvodne vydaná v knižnej podobe Cirkvou Adventistov Siedmeho Dňa roku 1995 v Martine. Táto voľne šíriteľná aplikácia predstavuje elektronickú verziu tohto spevníka.<br/><br/>Aplikácia bola vydaná s dovolením pôvodného vydavateľa."),
-        (header: HeaderView(header: "Autor"), text: "Milan Nosáľ"),
-        (header: HeaderView(header: "Verzia"), text: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)"),
-    ]
+    fileprivate let aboutInfo: String = "<b><i>\"Spievajte Hospodinovi novú pieseň, chválospev o ňom v zhromaždení zbožných.\"</i></b> Žalm 149:1\n\n<br/><br/>Spievajme Hospodinovi je zbierka duchovných piesní pôvodne vydaná v knižnej podobe Cirkvou Adventistov Siedmeho Dňa roku 1995 v Martine. Táto voľne šíriteľná aplikácia predstavuje elektronickú verziu tohto spevníka.<br/><br/>Aplikácia bola vydaná s dovolením pôvodného vydavateľa."
+    
+    fileprivate let author: (key: String, value: String) = (key: "Autor", value: "Milan Nosáľ")
+    
+    fileprivate let version: (key: String, value: String) = (key: "Verzia", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(TextCell.self, forCellReuseIdentifier: TextCell.identifier)
+        tableView.register(KeyValuePairCell.self, forCellReuseIdentifier: KeyValuePairCell.identifier)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 35
         
-        tableView.sectionHeaderHeight = 30
-        
         self.title = "O aplikácii"
-        
-        let doneButton = UIBarButtonItem(image: #imageLiteral(resourceName: "close").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(closeSelf))
-        self.navigationItem.rightBarButtonItem = doneButton
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return aboutInfo.count
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return aboutInfo[section].header
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 2
+        default:
+            fatalError()
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.identifier) as! TextCell
-        cell.content = aboutInfo[indexPath.section].text
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.identifier) as! TextCell
+            cell.content = aboutInfo
+            return cell
+        case 1:
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: KeyValuePairCell.identifier) as! KeyValuePairCell
+                cell.content = author
+                return cell
+            case 1:
+                let cell = tableView.dequeueReusableCell(withIdentifier: KeyValuePairCell.identifier) as! KeyValuePairCell
+                cell.content = version
+                return cell
+                
+            default:
+                fatalError()
+            }
+        default:
+            fatalError()
+        }
         
     }
     
@@ -117,6 +134,25 @@ extension AboutViewController {
             contentLabel.translatesAutoresizingMaskIntoConstraints = false
             contentLabel.constraintsFittingToSuperview(topOffset: 12, leftOffset: 12, bottomOffset: 12, rightOffset: 12).activate()
             
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    class KeyValuePairCell: UITableViewCell {
+        fileprivate static let identifier = "AboutViewController.KeyValuePairCell"
+        
+        var content: (key: String, value: String) = (key: "", value: "") {
+            didSet {
+                textLabel?.text = content.key
+                detailTextLabel?.text = content.value
+            }
+        }
+        
+        override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+            super.init(style: .value1, reuseIdentifier: reuseIdentifier)
         }
         
         required init?(coder aDecoder: NSCoder) {

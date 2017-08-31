@@ -23,6 +23,8 @@ class SettingsViewController: UITableViewController {
     fileprivate let separateRefrainsCell = SeparateRefrainsCell()
     fileprivate let wrappedVersesCell = WrappedVersesCell()
     
+    fileprivate let infoCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+    
     var exampleSong: Song! {
         didSet {
             currentSongModel = SongModel(song: exampleSong)
@@ -36,9 +38,10 @@ class SettingsViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 35
         
-        tableView.sectionHeaderHeight = 30
-        
         self.title = "Nastavenia"
+        
+        infoCell.textLabel?.text = "O aplikácii"
+        infoCell.accessoryType = .disclosureIndicator
         
         let resetButton = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(reset))
         self.navigationItem.leftBarButtonItem = resetButton
@@ -48,16 +51,19 @@ class SettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return aboutInfo[section].header
-//    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return 1
+        default:
+            fatalError()
+        }
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -70,10 +76,18 @@ class SettingsViewController: UITableViewController {
                 return separateRefrainsCell
             }
             fatalError()
+        case 1:
+            return infoCell
         default:
             fatalError()
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            self.navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
+        }
     }
     
     @objc fileprivate func reset() {
@@ -90,7 +104,6 @@ extension SettingsViewController {
     class SeparateRefrainsCell: UITableViewCell {
         static let identifier = "SettingsViewController.SeparateRefrainsCell"
         
-        fileprivate let label = UILabel()
         fileprivate let refrainSwitch = UISwitch()
         
         init() {
@@ -102,17 +115,14 @@ extension SettingsViewController {
         }
         
         private func setupInitialHierarchy() {
-            contentView.addSubview(label)
-            contentView.addSubview(refrainSwitch)
         }
         
         private func setupInitialAttributes() {
-            label.textAlignment = .left
-            label.text = "Samostatné refrény"
+            textLabel?.text = "Samostatné refrény"
             
             refrainSwitch.isOn = !UserDefaults.standard.refrainsWithVerses
-            
             refrainSwitch.addTarget(self, action: #selector(switchSwitched), for: .valueChanged)
+            self.accessoryView = refrainSwitch
         }
         
         @objc private func switchSwitched() {
@@ -121,18 +131,6 @@ extension SettingsViewController {
         }
         
         private func setupInitialLayout() {
-            label.translatesAutoresizingMaskIntoConstraints = false
-            refrainSwitch.translatesAutoresizingMaskIntoConstraints = false
-            [
-                label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-                
-                refrainSwitch.leftAnchor.constraint(equalTo: label.rightAnchor, constant: 4),
-                
-                refrainSwitch.centerYAnchor.constraint(equalTo: label.centerYAnchor),
-                refrainSwitch.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-                ].activate()
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -146,7 +144,6 @@ extension SettingsViewController {
     class WrappedVersesCell: UITableViewCell {
         static let identifier = "SettingsViewController.WrappedVersesCell"
         
-        fileprivate let label = UILabel()
         fileprivate let verseSwitch = UISwitch()
         
         init() {
@@ -158,17 +155,14 @@ extension SettingsViewController {
         }
         
         private func setupInitialHierarchy() {
-            contentView.addSubview(label)
-            contentView.addSubview(verseSwitch)
         }
         
         private func setupInitialAttributes() {
-            label.textAlignment = .left
-            label.text = "Zalomené riadky vo veršoch"
+            self.textLabel?.text = "Zalomené riadky vo veršoch"
             
             verseSwitch.isOn = !UserDefaults.standard.verseAsContinuousText
-            
             verseSwitch.addTarget(self, action: #selector(switchSwitched), for: .valueChanged)
+            self.accessoryView = verseSwitch
         }
         
         @objc private func switchSwitched() {
@@ -177,18 +171,6 @@ extension SettingsViewController {
         }
         
         private func setupInitialLayout() {
-            label.translatesAutoresizingMaskIntoConstraints = false
-            verseSwitch.translatesAutoresizingMaskIntoConstraints = false
-            [
-                label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-                
-                verseSwitch.leftAnchor.constraint(equalTo: label.rightAnchor, constant: 4),
-                
-                verseSwitch.centerYAnchor.constraint(equalTo: label.centerYAnchor),
-                verseSwitch.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-                ].activate()
         }
         
         required init?(coder aDecoder: NSCoder) {
