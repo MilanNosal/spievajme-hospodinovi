@@ -13,13 +13,19 @@ class SongsController: UITableViewController {
     fileprivate let songController: SongController
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
-    fileprivate var songs: [Song]
+    fileprivate let songs: [Song]
+    fileprivate let exampleSong: Song
     fileprivate var filteredSongs: [Song] = []
     
     fileprivate let quickSearch = QuickSearch(limit: (lower: 1, upper: 400))
     
     init(style: UITableViewStyle, songs: [Song]) {
         self.songs = songs
+        self.exampleSong = songs.first(where: { (song) -> Bool in
+            song.verses!.contains(where: { (verse) -> Bool in
+                return (verse as! Verse).number == "Ref"
+            })
+        })!
         songController = SongController(style: .plain)
         super.init(style: style)
         quickSearch.delegate = self
@@ -67,16 +73,16 @@ class SongsController: UITableViewController {
     
     fileprivate func setupToolbar() {
         
-        let settings = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(settingsSelected))
-        let info = UIBarButtonItem(image: #imageLiteral(resourceName: "infoEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(infoSelected))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(settingsSelected))
+        
         let search = UIBarButtonItem(image: #imageLiteral(resourceName: "searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
         let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
         
-        navigationController?.toolbar.tintColor = UIColor.black.withAlphaComponent(0.8)
+//        navigationController?.toolbar.tintColor = UIColor.black.withAlphaComponent(0.8)
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         
-        toolbarItems = [spacer, settings, spacer, spacer, spacer, info, spacer, spacer, spacer, search, spacer, spacer, spacer, quickSearch, spacer]
+        toolbarItems = [spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, search, spacer, spacer, quickSearch, spacer]
         
         navigationController?.setToolbarHidden(false, animated: false)
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
@@ -84,6 +90,7 @@ class SongsController: UITableViewController {
     
     @objc fileprivate func settingsSelected() {
         let settingsController = SettingsViewController(style: .grouped)
+        settingsController.exampleSong = self.exampleSong
         let navController = UINavigationController(rootViewController: settingsController)
         present(navController, animated: true, completion: nil)
     }

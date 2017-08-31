@@ -23,6 +23,13 @@ class SettingsViewController: UITableViewController {
     fileprivate let separateRefrainsCell = SeparateRefrainsCell()
     fileprivate let wrappedVersesCell = WrappedVersesCell()
     
+    var exampleSong: Song! {
+        didSet {
+            currentSongModel = SongModel(song: exampleSong)
+        }
+    }
+    fileprivate var currentSongModel: SongModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

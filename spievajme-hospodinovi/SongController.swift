@@ -34,6 +34,9 @@ class SongController: UITableViewController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 35
+        
+        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.estimatedSectionHeaderHeight = 35
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,8 +58,11 @@ class SongController: UITableViewController {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return songModel?.verses[section].title ?? ""
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = songModel?.verses[section].title ?? ""
+        let view = VerseHeaderView()
+        view.header = title
+        return view
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
