@@ -12,6 +12,7 @@ class EmptyCell: UITableViewCell {
     
     static let identifier = "EmptyCell"
     fileprivate let view = UIView()
+    fileprivate var heightConstraint: NSLayoutConstraint!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,9 +32,19 @@ class EmptyCell: UITableViewCell {
     fileprivate func setupInitialLayout() {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.constraintsFittingToSuperview().activate()
-        view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3).with(priority: UILayoutPriority.defaultHigh).isActive = true
+        heightConstraint = view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4).with(priority: UILayoutPriority.defaultHigh)
+        heightConstraint.isActive = true
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            heightConstraint.constant = 0
+        } else {
+            heightConstraint.constant = UIScreen.main.bounds.height / 4
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
