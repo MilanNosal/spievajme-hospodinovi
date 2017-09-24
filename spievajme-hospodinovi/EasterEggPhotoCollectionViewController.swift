@@ -18,7 +18,11 @@ class EasterEggPhotoCollectionViewController: UIViewController {
                                         EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_3")),
                                         EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_4")),
                                         EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_5")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_6"))]
+                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_6")),
+                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_7")),
+                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_8")),
+                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_9")),
+                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_10"))]
     
     fileprivate var selectedPhoto = 0
     

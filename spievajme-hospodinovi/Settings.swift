@@ -14,7 +14,9 @@ struct ColorScheme {
 
 class FontScheme {
     var verseTextFont: UIFont?
+    var verseTextFontLandscape: UIFont?
     var verseTitleFont: UIFont?
+    var verseTitleFontLandscape: UIFont?
     var navigationItemTitleFont: UIFont?
     var navigationItemButtonFont: UIFont?
     var songNumberFont: UIFont?
@@ -39,7 +41,9 @@ class Settings {
     fileprivate static func getFontScheme(for size: CGFloat) -> FontScheme {
         let scheme = FontScheme()
         scheme.verseTextFont = UIFont.systemFont(ofSize: size)
+        scheme.verseTextFontLandscape = UIFont.systemFont(ofSize: size + 10)
         scheme.verseTitleFont = UIFont.boldSystemFont(ofSize: size)
+        scheme.verseTitleFontLandscape = UIFont.boldSystemFont(ofSize: size + 10)
         scheme.navigationItemTitleFont = UIFont.boldSystemFont(ofSize: size)
         scheme.navigationItemButtonFont = UIFont.systemFont(ofSize: size)
         scheme.songNumberFont = UIFont.boldSystemFont(ofSize: size)

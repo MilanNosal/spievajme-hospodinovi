@@ -44,6 +44,8 @@ class SongCell: UITableViewCell {
         nameLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
         nameLabel.text = "NONE"
         nameLabel.textAlignment = .left
+        
+        setupFontScheme()
     }
     
     fileprivate func setupInitialLayout() {
@@ -54,16 +56,21 @@ class SongCell: UITableViewCell {
         [
             numberLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 4),
             numberLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -4),
-            numberLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: 4),
+            numberLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor, constant: 4),
             numberLabel.widthAnchor.constraint(equalToConstant: 35),
             
             nameLabel.centerYAnchor.constraint(equalTo: numberLabel.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: numberLabel.trailingAnchor, constant: 8),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 8)
+            nameLabel.leftAnchor.constraint(equalTo: numberLabel.rightAnchor, constant: 8),
+            nameLabel.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor, constant: -4)
         ].activate()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    @objc override func setupFontScheme() {
+        numberLabel.font = UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body).pointSize)
+        nameLabel.textAlignment = .left
     }
 }

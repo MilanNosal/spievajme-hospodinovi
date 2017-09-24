@@ -75,6 +75,7 @@ class SongStoreCoreData: SongStore {
         let song: Song = context.createObject()
         song.number = Int32(songStub.number)
         song.title = songStub.title
+        song.isFavourite = false
         song.addToVerses(NSOrderedSet(array: verses))
         return song
     }
@@ -83,5 +84,11 @@ class SongStoreCoreData: SongStore {
         let request: NSFetchRequest<Song> = Song.sortedFetchRequest()
         let songs: [Song] = try! persistentContainer.viewContext.fetch(request)
         return songs
+    }
+    
+    func performUpdates(block: @escaping () -> Void) {
+        persistentContainer.viewContext.performChanges {
+            block()
+        }
     }
 }

@@ -39,6 +39,8 @@ class SettingsViewController: SHTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        verseCell.selectionStyle = .none
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 35
         
@@ -59,7 +61,7 @@ class SettingsViewController: SHTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,10 +69,8 @@ class SettingsViewController: SHTableViewController {
         case 0:
             return 2
         case 1:
-            return 1
+            return 2
         case 2:
-            return 1
-        case 3:
             return 1
         default:
             fatalError()
@@ -91,14 +91,19 @@ class SettingsViewController: SHTableViewController {
             }
             fatalError()
         case 1:
-            fontSizeCell.reload()
-            return fontSizeCell
+            if indexPath.row == 0 {
+                fontSizeCell.reload()
+                return fontSizeCell
+            }
+            if indexPath.row == 1 {
+                currentSongModel = SongModel(song: exampleSong)
+                verseCell.verse = currentSongModel.verses.first?.text
+                verseCell.setupFontScheme()
+                return verseCell
+            }
+            fatalError()
         case 2:
             return infoCell
-        case 3:
-            verseCell.verse = currentSongModel.verses.first?.text
-            verseCell.setupFontScheme()
-            return verseCell
             
         default:
             fatalError()
@@ -144,7 +149,7 @@ class SettingsViewController: SHTableViewController {
         infoCell.setupFontScheme()
         verseCell.setupFontScheme()
         tableView.beginUpdates()
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .none)
+        tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .none)
         tableView.endUpdates()
     }
     
@@ -272,7 +277,7 @@ extension SettingsViewController {
         
         private func setupInitialAttributes() {
             
-            let currentValue = Int(UserDefaults.standard.fontSize)
+            let currentValue = Int(round(UserDefaults.standard.fontSize))
             
             self.descLabel.text = "Veľkosť písma"
             self._lastValue = currentValue

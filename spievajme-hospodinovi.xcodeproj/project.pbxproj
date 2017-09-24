@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9904AA241F78131800E37357 /* LandscapeVerseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904AA231F78131800E37357 /* LandscapeVerseController.swift */; };
 		99090D091D47DF7600A9E2A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99090D081D47DF7600A9E2A4 /* AppDelegate.swift */; };
 		99090D0E1D47DF7600A9E2A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99090D0C1D47DF7600A9E2A4 /* Main.storyboard */; };
 		99090D101D47DF7600A9E2A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99090D0F1D47DF7600A9E2A4 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 		991D52191F2E7C9300E0C1F8 /* spevnik.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 991D52171F2E7C9300E0C1F8 /* spevnik.xcdatamodeld */; };
 		9921429E1F2F96020061F895 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921429D1F2F96020061F895 /* Line.swift */; };
 		992142A01F2F977D0061F895 /* SongStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921429F1F2F977D0061F895 /* SongStore.swift */; };
+		992314A31F78642B00901747 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992314A21F78642B00901747 /* EmptyCell.swift */; };
 		993019651D49325100DE2DCE /* VerseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993019641D49325100DE2DCE /* VerseCell.swift */; };
 		993130EE1F5B09D400BCE0EB /* EasterEggPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993130ED1F5B09D400BCE0EB /* EasterEggPhotoViewController.swift */; };
 		993130F01F5B0B3D00BCE0EB /* EasterEggPhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993130EF1F5B0B3D00BCE0EB /* EasterEggPhotoCollectionViewController.swift */; };
@@ -45,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9904AA231F78131800E37357 /* LandscapeVerseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeVerseController.swift; sourceTree = "<group>"; };
 		99090D051D47DF7600A9E2A4 /* spievajme-hospodinovi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spievajme-hospodinovi.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99090D081D47DF7600A9E2A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99090D0D1D47DF7600A9E2A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 		991D52181F2E7C9300E0C1F8 /* spevnik.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = spevnik.xcdatamodel; sourceTree = "<group>"; };
 		9921429D1F2F96020061F895 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		9921429F1F2F977D0061F895 /* SongStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStore.swift; sourceTree = "<group>"; };
+		992314A21F78642B00901747 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		993019641D49325100DE2DCE /* VerseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerseCell.swift; sourceTree = "<group>"; };
 		993130ED1F5B09D400BCE0EB /* EasterEggPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasterEggPhotoViewController.swift; sourceTree = "<group>"; };
 		993130EF1F5B0B3D00BCE0EB /* EasterEggPhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasterEggPhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 				99ECEAA71D480688006EFCB7 /* SongController.swift */,
 				993019641D49325100DE2DCE /* VerseCell.swift */,
 				997FF6951F575856007C5622 /* VerseHeaderView.swift */,
+				9904AA231F78131800E37357 /* LandscapeVerseController.swift */,
+				992314A21F78642B00901747 /* EmptyCell.swift */,
 			);
 			name = SongsDetail;
 			sourceTree = "<group>";
@@ -301,6 +307,8 @@
 				99ECEAA81D480688006EFCB7 /* SongController.swift in Sources */,
 				993130EE1F5B09D400BCE0EB /* EasterEggPhotoViewController.swift in Sources */,
 				99149E4F1F2E096A00CB38DD /* LoadingController.swift in Sources */,
+				9904AA241F78131800E37357 /* LandscapeVerseController.swift in Sources */,
+				992314A31F78642B00901747 /* EmptyCell.swift in Sources */,
 				99090D1D1D47EA0200A9E2A4 /* Song.swift in Sources */,
 				993EE03C1F5C76F200F90E84 /* SHViewController.swift in Sources */,
 				999945CB1F4CC897005BC9DC /* UIButtonExtensions.swift in Sources */,

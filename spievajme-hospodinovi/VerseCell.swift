@@ -43,10 +43,10 @@ class VerseCell: UITableViewCell {
     fileprivate func setupInitialLayout() {
         verseLabel.translatesAutoresizingMaskIntoConstraints = false
         [
-            verseLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 0),
-            verseLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -16),
-            verseLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: 0),
-            verseLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 2)
+            verseLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            verseLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            verseLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            verseLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16)
         ].activate()
     }
     
@@ -55,9 +55,19 @@ class VerseCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        setupFontScheme()
+    }
+    
     @objc override func setupFontScheme() {
         super.setupFontScheme()
-        let fontSize = Settings.currentFontScheme.verseTextFont
-        verseLabel.font = fontSize
+        
+        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            verseLabel.font = Settings.currentFontScheme.verseTextFontLandscape
+        } else {
+            verseLabel.font = Settings.currentFontScheme.verseTextFont
+        }
     }
 }

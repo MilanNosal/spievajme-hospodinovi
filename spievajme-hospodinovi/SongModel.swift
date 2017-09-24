@@ -10,11 +10,13 @@ import Foundation
 
 struct SongModel {
     
+    let song: Song
     let songNumber: Int
     let songTitle: String
     var verses: [(title: String, text: String)] = []
     
     init(song: Song) {
+        self.song = song
         songNumber = Int(song.number)
         songTitle = song.title!
         

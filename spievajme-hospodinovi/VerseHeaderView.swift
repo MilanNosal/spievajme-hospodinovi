@@ -33,7 +33,7 @@ class VerseHeaderView: UIView, FontSensitive {
     }
     
     fileprivate func setupInitialAttributes() {
-        self.backgroundColor = UIColor.lightGray
+        self.backgroundColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1)
         headerLabel.font = Settings.currentFontScheme.verseTitleFont
         headerLabel.text = "NONE"
         headerLabel.textAlignment = .left
@@ -42,10 +42,20 @@ class VerseHeaderView: UIView, FontSensitive {
     
     fileprivate func setupInitialLayout() {
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerLabel.constraintsFittingToSuperview(topOffset: 12, leftOffset: 12, bottomOffset: 8, rightOffset: 8).activate()
+        headerLabel.constraintsFittingToSuperview(topOffset: 4, leftOffset: 16, bottomOffset: 4, rightOffset: 16).activate()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        setupFontScheme()
     }
     
     func setupFontScheme() {
-        headerLabel.font = Settings.currentFontScheme.verseTitleFont
+        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            headerLabel.font = Settings.currentFontScheme.verseTitleFontLandscape
+        } else {
+            headerLabel.font = Settings.currentFontScheme.verseTitleFont
+        }
     }
 }

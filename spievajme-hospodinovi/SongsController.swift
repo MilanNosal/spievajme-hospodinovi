@@ -16,11 +16,19 @@ class SongsController: SHTableViewController {
     fileprivate let songs: [Song]
     fileprivate let exampleSong: Song
     fileprivate var filteredSongs: [Song] = []
+    fileprivate var favouritesOn: Bool = false
+    
+    fileprivate let emptyStar = #imageLiteral(resourceName: "toolbar_starEmpty").withRenderingMode(.alwaysTemplate)
+    fileprivate let fullStar = #imageLiteral(resourceName: "toolbar_starFilled").withRenderingMode(.alwaysTemplate)
+    fileprivate var lastSong: Song?
+    
+    fileprivate var lastSongButton: UIBarButtonItem!
     
     fileprivate let quickSearch = QuickSearch(limit: (lower: 1, upper: 400))
     
     init(style: UITableViewStyle, songs: [Song]) {
         self.songs = songs
+        self.filteredSongs = songs
         self.exampleSong = songs.first!
         songController = SongController()
         super.init(style: style)
@@ -67,17 +75,39 @@ class SongsController: SHTableViewController {
     
     fileprivate func setupToolbar() {
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(settingsSelected))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "navigation_settingsEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(settingsSelected))
         
-        let search = UIBarButtonItem(image: #imageLiteral(resourceName: "searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
-        let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
+        let search = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
+        let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
+        let favourites = UIBarButtonItem(image: emptyStar, style: .plain, target: self, action: #selector(switchFavourites(_:)))
+        lastSongButton = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_lastSong").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showLastSong))
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         
-        toolbarItems = [search, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, quickSearch]
+        toolbarItems = [favourites, spacer, spacer, spacer, search, spacer, spacer, spacer, quickSearch, spacer, spacer, spacer, lastSongButton]
+        
+        lastSongButton.isEnabled = false
         
         navigationController?.setToolbarHidden(false, animated: false)
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
+    
+    @objc fileprivate func switchFavourites(_ sender: UIBarButtonItem) {
+        favouritesOn = !favouritesOn
+        if favouritesOn {
+            sender.image = fullStar
+        } else {
+            sender.image = emptyStar
+        }
+        filterSongs(searchString: searchController.searchBar.text)
+    }
+    
+    @objc fileprivate func showLastSong() {
+        guard let lastSong = lastSong else {
+            return
+        }
+        songController.songModel = SongModel(song: lastSong)
+        self.navigationController?.pushViewController(songController, animated: true)
     }
     
     @objc fileprivate func settingsSelected() {
@@ -97,6 +127,11 @@ class SongsController: SHTableViewController {
     }
     
     func filterSongs(searchString: String?) {
+        
+        var songs = self.songs
+        if favouritesOn {
+            songs = songs.filter({ $0.isFavourite })
+        }
         
         if let searchedString = searchString?.lowercased(), searchedString != "" {
             
@@ -137,35 +172,23 @@ class SongsController: SHTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive {
-            return filteredSongs.count
-        } else {
-            return songs.count
-        }
+        return filteredSongs.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: SongCell.identifier) as! SongCell
         
-        let song: Song
-        if searchController.isActive {
-            song = filteredSongs[indexPath.row]
-        } else {
-            song = songs[indexPath.row]
-        }
-        
+        let song: Song = filteredSongs[indexPath.row]
         cell.song = song
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if searchController.isActive {
-            songController.songModel = SongModel(song: filteredSongs[indexPath.row])
-        } else {
-            songController.songModel = SongModel(song: songs[indexPath.row])
-        }
+        songController.songModel = SongModel(song: filteredSongs[indexPath.row])
+        lastSong = filteredSongs[indexPath.row]
+        lastSongButton.isEnabled = true
         
         self.navigationController?.pushViewController(songController, animated: true)
         
@@ -173,7 +196,6 @@ class SongsController: SHTableViewController {
 }
 
 extension SongsController: UISearchResultsUpdating {
-    
     func updateSearchResults(for: UISearchController) {
         filterSongs(searchString: searchController.searchBar.text)
     }
@@ -182,6 +204,8 @@ extension SongsController: UISearchResultsUpdating {
 extension SongsController: QuickSearchDelegate {
     func quickSearchDidSelect(number: Int) {
         songController.songModel = SongModel(song: songs[number - 1])
+        lastSong = songs[number - 1]
+        lastSongButton.isEnabled = true
         self.navigationController?.pushViewController(songController, animated: true)
     }
 }

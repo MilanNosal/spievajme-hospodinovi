@@ -15,5 +15,7 @@ protocol SongStore {
     func persist(from songStubs: [SongStub], completion: @escaping ([Song]) -> Void)
     
     func getAllSongs() -> [Song]
+    
+    func performUpdates(block: @escaping () -> Void)
 }
 
