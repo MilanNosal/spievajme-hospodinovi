@@ -18,12 +18,16 @@ import UIKit
  
  */
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: SHTableViewController {
     
     fileprivate let separateRefrainsCell = SeparateRefrainsCell()
     fileprivate let wrappedVersesCell = WrappedVersesCell()
     
+    fileprivate let fontSizeCell = FontSizeCell()
+    
     fileprivate let infoCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+    
+    fileprivate let verseCell = VerseCell(style: .default, reuseIdentifier: nil)
     
     var exampleSong: Song! {
         didSet {
@@ -42,16 +46,20 @@ class SettingsViewController: UITableViewController {
         
         infoCell.textLabel?.text = "O aplikácii"
         infoCell.accessoryType = .disclosureIndicator
+        infoCell.selectionStyle = .none
+        infoCell.setupFontScheme()
         
         let resetButton = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(reset))
         self.navigationItem.leftBarButtonItem = resetButton
         
-        let doneButton = UIBarButtonItem(image: #imageLiteral(resourceName: "close").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(closeSelf))
+        let doneButton = UIBarButtonItem(title: "Hotovo", style: .plain, target: self, action: #selector(closeSelf))
         self.navigationItem.rightBarButtonItem = doneButton
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Späť", style: .plain, target: nil, action: nil)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,6 +67,10 @@ class SettingsViewController: UITableViewController {
         case 0:
             return 2
         case 1:
+            return 1
+        case 2:
+            return 1
+        case 3:
             return 1
         default:
             fatalError()
@@ -70,14 +82,24 @@ class SettingsViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
+                wrappedVersesCell.reload()
                 return wrappedVersesCell
             }
             if indexPath.row == 1 {
+                separateRefrainsCell.reload()
                 return separateRefrainsCell
             }
             fatalError()
         case 1:
+            fontSizeCell.reload()
+            return fontSizeCell
+        case 2:
             return infoCell
+        case 3:
+            verseCell.verse = currentSongModel.verses.first?.text
+            verseCell.setupFontScheme()
+            return verseCell
+            
         default:
             fatalError()
         }
@@ -85,19 +107,51 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 2 {
             self.navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
         }
     }
     
     @objc fileprivate func reset() {
         
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        alert.title = "Reset nastavení"
+        alert.message = "Si si istý, že chceš nastavenia zresetovať do pôvodného stavu?"
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let resetAction = UIAlertAction(title: "Reset", style: .default, handler: { _ in
+            
+            Settings.setupNewFontScheme(of: CGFloat(18))
+            UserDefaults.standard.refrainsWithVerses = false
+            UserDefaults.standard.verseAsContinuousText = false
+        })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(resetAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc fileprivate func closeSelf() {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    override func setupFontScheme() {
+        super.setupFontScheme()
+        separateRefrainsCell.setupFontScheme()
+        wrappedVersesCell.setupFontScheme()
+        fontSizeCell.setupFontScheme()
+        infoCell.setupFontScheme()
+        verseCell.setupFontScheme()
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .none)
+        tableView.endUpdates()
+    }
+    
+    override func setupSettings() {
+        super.setupSettings()
+        tableView.reloadData()
+    }
 }
 
 extension SettingsViewController {
@@ -123,6 +177,8 @@ extension SettingsViewController {
             refrainSwitch.isOn = !UserDefaults.standard.refrainsWithVerses
             refrainSwitch.addTarget(self, action: #selector(switchSwitched), for: .valueChanged)
             self.accessoryView = refrainSwitch
+            
+            self.selectionStyle = .none
         }
         
         @objc private func switchSwitched() {
@@ -135,6 +191,10 @@ extension SettingsViewController {
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+        
+        func reload() {
+            refrainSwitch.isOn = !UserDefaults.standard.refrainsWithVerses
         }
         
     }
@@ -163,6 +223,8 @@ extension SettingsViewController {
             verseSwitch.isOn = !UserDefaults.standard.verseAsContinuousText
             verseSwitch.addTarget(self, action: #selector(switchSwitched), for: .valueChanged)
             self.accessoryView = verseSwitch
+            
+            self.selectionStyle = .none
         }
         
         @objc private func switchSwitched() {
@@ -177,33 +239,103 @@ extension SettingsViewController {
             fatalError("init(coder:) has not been implemented")
         }
         
+        func reload() {
+            verseSwitch.isOn = !UserDefaults.standard.verseAsContinuousText
+        }
+        
     }
 }
 
-extension UserDefaults {
-    
-    private static let refrainsWithVersesKey = "org.milan.nosal.refrainsWithVerses"
-    
-    var refrainsWithVerses: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: UserDefaults.refrainsWithVersesKey)
+extension SettingsViewController {
+    class FontSizeCell: UITableViewCell {
+        static let identifier = "SettingsViewController.FontSizeCell"
+        
+        fileprivate let sizeSlider = UISlider()
+        fileprivate let descLabel = UILabel()
+        fileprivate let detailLabel = UILabel()
+        
+        fileprivate var _lastValue: Int = 0
+        
+        init() {
+            super.init(style: .default, reuseIdentifier: nil)
+            
+            setupInitialHierarchy()
+            setupInitialAttributes()
+            setupInitialLayout()
         }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaults.refrainsWithVersesKey)
+        
+        private func setupInitialHierarchy() {
+            contentView.addSubview(sizeSlider)
+            contentView.addSubview(descLabel)
+            contentView.addSubview(detailLabel)
         }
+        
+        private func setupInitialAttributes() {
+            
+            let currentValue = Int(UserDefaults.standard.fontSize)
+            
+            self.descLabel.text = "Veľkosť písma"
+            self._lastValue = currentValue
+            self.detailLabel.text = "\(currentValue)"
+            self.detailLabel.textAlignment = .right
+            
+            
+            sizeSlider.minimumValue = 12
+            sizeSlider.maximumValue = 40
+            sizeSlider.isContinuous = true
+            sizeSlider.value = Float(currentValue)
+            sizeSlider.addTarget(self, action: #selector(sliderChanged(slider:)), for: UIControlEvents.valueChanged)
+
+            self.selectionStyle = .none
+        }
+        
+        @objc private func sliderChanged(slider: UISlider) {
+            let currentValue = Int(round(slider.value))
+            slider.value = Float(currentValue)
+            
+            if _lastValue != currentValue {
+                self.detailLabel.text = "\(currentValue)"
+                _lastValue = currentValue
+                Settings.setupNewFontScheme(of: CGFloat(currentValue))
+            }
+            
+        }
+        
+        private func setupInitialLayout() {
+            descLabel.translatesAutoresizingMaskIntoConstraints = false
+            detailLabel.translatesAutoresizingMaskIntoConstraints = false
+            sizeSlider.translatesAutoresizingMaskIntoConstraints = false
+            [
+                descLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor, constant: 0),
+                descLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 0),
+                
+                
+                detailLabel.leftAnchor.constraint(equalTo: descLabel.rightAnchor, constant: 8),
+                detailLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 0),
+                detailLabel.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor, constant: 0),
+                
+                detailLabel.widthAnchor.constraint(equalTo: descLabel.widthAnchor, multiplier: 0.5),
+                
+                sizeSlider.topAnchor.constraint(equalTo: descLabel.bottomAnchor, constant: 12),
+                sizeSlider.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor, constant: 0),
+                sizeSlider.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor, constant: 0),
+                sizeSlider.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -8),
+                
+            ].activate()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        func reload() {
+            let currentValue = UserDefaults.standard.fontSize
+            self._lastValue = Int(currentValue)
+            self.detailLabel.text = "\(currentValue)"
+            sizeSlider.value = Float(currentValue)
+        }
+        
     }
-    
-    private static let verseAsContinuousTextKey = "org.milan.nosal.verseAsContinuousText"
-    
-    var verseAsContinuousText: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: UserDefaults.verseAsContinuousTextKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaults.verseAsContinuousTextKey)
-        }
-    }
-    
 }
 
 

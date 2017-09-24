@@ -31,7 +31,7 @@ class QuickSearch: NSObject, UITextFieldDelegate {
             textField.keyboardType = .numberPad
             textField.delegate = self
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+        let cancel = UIAlertAction(title: "Zrušiť", style: .cancel, handler: { (action) -> Void in
             self.submitAction = nil
         })
         submitAction = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
@@ -53,9 +53,7 @@ class QuickSearch: NSObject, UITextFieldDelegate {
         }
         
         if number == 1987 {
-            controller.dismiss(animated: true, completion: {
-                self.easterEgg(in: presentedBy)
-            })
+            self.easterEgg(in: presentedBy)
         } else if number >= limit.lower && number <= limit.upper {
             delegate?.quickSearchDidSelect(number: number)
         } else {
@@ -79,6 +77,7 @@ class QuickSearch: NSObject, UITextFieldDelegate {
 
 extension QuickSearch {
     fileprivate func easterEgg(in viewController: UIViewController) {
-        // TODO
+        let vc = UINavigationController(rootViewController: EasterEggPhotoCollectionViewController())
+        viewController.present(vc, animated: true, completion: nil)
     }
 }

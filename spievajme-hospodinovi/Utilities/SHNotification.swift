@@ -11,6 +11,8 @@ import Foundation
 enum SHNotification: String {
     
     case settingsChanged = "milan.nosal.SHSettingsChanged"
+    case fontSchemeChanged = "milan.nosal.SHFontSchemeChanged"
+    case colorSchemeChanged = "milan.nosal.SHColorSchemeChanged"
     
     var notificationName: NSNotification.Name {
         return NSNotification.Name(self.rawValue)

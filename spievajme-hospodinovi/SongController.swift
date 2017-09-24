@@ -68,6 +68,7 @@ class SongController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VerseCell.identifier) as! VerseCell
         cell.verse = songModel?.verses[indexPath.section].text ?? ""
+        cell.setupFontScheme()
         return cell
     }
 }

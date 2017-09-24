@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SongsController: UITableViewController {
+class SongsController: SHTableViewController {
     
     fileprivate let songController: SongController
     fileprivate let searchController = UISearchController(searchResultsController: nil)
@@ -21,34 +21,24 @@ class SongsController: UITableViewController {
     
     init(style: UITableViewStyle, songs: [Song]) {
         self.songs = songs
-        self.exampleSong = songs.first(where: { (song) -> Bool in
-            song.verses!.contains(where: { (verse) -> Bool in
-                return (verse as! Verse).number == "Ref"
-            })
-        })!
-        songController = SongController(style: .plain)
+        self.exampleSong = songs.first!
+        songController = SongController()
         super.init(style: style)
         quickSearch.delegate = self
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(receiveSHNotification(notification:)),
-                                               name: SHNotification.settingsChanged.notificationName,
-                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    override func setupSettings() {
+        super.setupSettings()
+        songController.songModel = nil
     }
     
-    @objc fileprivate func receiveSHNotification(notification: NSNotification) {
-        switch SHNotification(rawValue: notification.name.rawValue)! {
-        case .settingsChanged:
-            songController.songModel = nil
-        }
+    override func setupFontScheme() {
+        super.setupFontScheme()
+        songController.songModel = nil
     }
     
     override func viewDidLoad() {
@@ -62,11 +52,15 @@ class SongsController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         
+        searchController.searchBar.placeholder = "Hľadať"
+        searchController.searchBar.setValue("Zrušiť", forKey:"_cancelButtonText")
+        
         definesPresentationContext = true
         
         self.tableView.tableHeaderView = searchController.searchBar
         
         self.title = "Spievajme Hospodinovi"
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Späť", style: .plain, target: nil, action: nil)
         
         setupToolbar()
     }
@@ -78,11 +72,9 @@ class SongsController: UITableViewController {
         let search = UIBarButtonItem(image: #imageLiteral(resourceName: "searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
         let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
         
-//        navigationController?.toolbar.tintColor = UIColor.black.withAlphaComponent(0.8)
-        
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         
-        toolbarItems = [spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, search, spacer, spacer, quickSearch, spacer]
+        toolbarItems = [search, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, spacer, quickSearch]
         
         navigationController?.setToolbarHidden(false, animated: false)
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)

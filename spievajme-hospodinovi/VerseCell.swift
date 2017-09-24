@@ -37,6 +37,7 @@ class VerseCell: UITableViewCell {
         verseLabel.text = "NONE"
         verseLabel.textAlignment = .left
         verseLabel.numberOfLines = 0
+        setupFontScheme()
     }
     
     fileprivate func setupInitialLayout() {
@@ -52,5 +53,11 @@ class VerseCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    @objc override func setupFontScheme() {
+        super.setupFontScheme()
+        let fontSize = Settings.currentFontScheme.verseTextFont
+        verseLabel.font = fontSize
     }
 }

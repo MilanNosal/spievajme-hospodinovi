@@ -8,11 +8,11 @@
 
 import UIKit
 
-class AboutViewController: UITableViewController {
+class AboutViewController: SHTableViewController {
     
     fileprivate let aboutInfo: String = "<b><i>\"Spievajte Hospodinovi novú pieseň, chválospev o ňom v zhromaždení zbožných.\"</i></b> Žalm 149:1\n\n<br/><br/>Spievajme Hospodinovi je zbierka duchovných piesní pôvodne vydaná v knižnej podobe Cirkvou Adventistov Siedmeho Dňa roku 1995 v Martine. Táto voľne šíriteľná aplikácia predstavuje elektronickú verziu tohto spevníka.<br/><br/>Aplikácia bola vydaná s dovolením pôvodného vydavateľa."
     
-    fileprivate let author: (key: String, value: String) = (key: "Autor", value: "Milan Nosáľ")
+    fileprivate let author: (key: String, value: String) = (key: "Kontakt", value: "milan.nosal@gmail.com")
     
     fileprivate let version: (key: String, value: String) = (key: "Verzia", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)")
     
@@ -24,6 +24,8 @@ class AboutViewController: UITableViewController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 35
+        
+        tableView.allowsSelection = false
         
         self.title = "O aplikácii"
     }
@@ -130,6 +132,7 @@ extension AboutViewController {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
             contentView.addSubview(contentLabel)
+            contentLabel.font = Settings.currentFontScheme.settingsSubtitleFont
             contentLabel.numberOfLines = 0
             contentLabel.translatesAutoresizingMaskIntoConstraints = false
             contentLabel.constraintsFittingToSuperview(topOffset: 12, leftOffset: 12, bottomOffset: 12, rightOffset: 12).activate()
@@ -138,6 +141,13 @@ extension AboutViewController {
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+        
+        @objc override func setupFontScheme() {
+            super.setupFontScheme()
+            contentLabel.font = Settings.currentFontScheme.settingsSubtitleFont
+            let contentText = self.content
+            self.content = contentText
         }
     }
     
