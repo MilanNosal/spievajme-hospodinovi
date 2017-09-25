@@ -7,6 +7,7 @@
     <entity name="Song" representedClassName="Song" syncable="YES" codeGenerationType="class">
         <attribute name="isFavourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="searchableCacheString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="verses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Verse" inverseName="song" inverseEntity="Verse" syncable="YES"/>
     </entity>
@@ -17,7 +18,7 @@
     </entity>
     <elements>
         <element name="Line" positionX="-36" positionY="18" width="128" height="75"/>
-        <element name="Song" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Song" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Verse" positionX="-54" positionY="9" width="128" height="90"/>
     </elements>
 </model>

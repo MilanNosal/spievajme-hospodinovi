@@ -26,6 +26,12 @@ struct SongStub: Codable {
         self.title = title
         self.verses = verses
     }
+    
+    func songTextDiacriticsInsensitive() -> String {
+        let songText = verses.map({ $0.lines.joined(separator: " ") }).joined(separator: " ")
+        let fullSong = "\(number) \(title) \(songText)"
+        return fullSong.folding(options: .diacriticInsensitive, locale: Locale.current).uppercased()
+    }
 }
 
 struct VerseStub: Codable {

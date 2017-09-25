@@ -76,6 +76,7 @@ class SongStoreCoreData: SongStore {
         song.number = Int32(songStub.number)
         song.title = songStub.title
         song.isFavourite = false
+        song.searchableCacheString = songStub.songTextDiacriticsInsensitive()
         song.addToVerses(NSOrderedSet(array: verses))
         return song
     }
