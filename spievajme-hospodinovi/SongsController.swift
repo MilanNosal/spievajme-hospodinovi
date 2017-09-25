@@ -39,6 +39,15 @@ class SongsController: SHTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let lastSong = lastSong,
+            let indexOfLastSongInFiltered = filteredSongs.index(of: lastSong) {
+            tableView.selectRow(at: IndexPath(row: indexOfLastSongInFiltered, section: 0), animated: false, scrollPosition: .middle)
+        }
+    }
+    
     override func setupSettings() {
         super.setupSettings()
         songController.songModel = nil
