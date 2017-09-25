@@ -25,9 +25,11 @@ class SettingsViewController: SHTableViewController {
     
     fileprivate let fontSizeCell = FontSizeCell()
     
-    fileprivate let infoCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-    
     fileprivate let verseCell = VerseCell(style: .default, reuseIdentifier: nil)
+    
+    
+    fileprivate let helpCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+    fileprivate let infoCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
     
     var exampleSong: Song! {
         didSet {
@@ -45,6 +47,11 @@ class SettingsViewController: SHTableViewController {
         tableView.estimatedRowHeight = 35
         
         self.title = "Nastavenia"
+        
+        helpCell.textLabel?.text = "Pomoc"
+        helpCell.accessoryType = .disclosureIndicator
+        helpCell.selectionStyle = .none
+        helpCell.setupFontScheme()
         
         infoCell.textLabel?.text = "O aplikácii"
         infoCell.accessoryType = .disclosureIndicator
@@ -71,7 +78,7 @@ class SettingsViewController: SHTableViewController {
         case 1:
             return 2
         case 2:
-            return 1
+            return 2
         default:
             fatalError()
         }
@@ -103,7 +110,14 @@ class SettingsViewController: SHTableViewController {
             }
             fatalError()
         case 2:
-            return infoCell
+            
+            if indexPath.row == 0 {
+                return helpCell
+            }
+            if indexPath.row == 1 {
+                return infoCell
+            }
+            fatalError()
             
         default:
             fatalError()
@@ -113,7 +127,16 @@ class SettingsViewController: SHTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
-            self.navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
+            switch indexPath.row {
+            case 0:
+                self.navigationController?.pushViewController(HelpViewController(style: .grouped), animated: true)
+                
+            case 1:
+                self.navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
+                
+            default:
+                fatalError()
+            }
         }
     }
     
@@ -146,8 +169,11 @@ class SettingsViewController: SHTableViewController {
         separateRefrainsCell.setupFontScheme()
         wrappedVersesCell.setupFontScheme()
         fontSizeCell.setupFontScheme()
+        helpCell.setupFontScheme()
         infoCell.setupFontScheme()
         verseCell.setupFontScheme()
+        
+        // update verse cell
         tableView.beginUpdates()
         tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .none)
         tableView.endUpdates()

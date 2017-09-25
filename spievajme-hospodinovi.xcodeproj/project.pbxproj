@@ -42,6 +42,7 @@
 		99B44AEC1F4B6014008DB0B5 /* CenteredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B44AEB1F4B6014008DB0B5 /* CenteredButton.swift */; };
 		99B44AF31F4B771A008DB0B5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B44AF21F4B771A008DB0B5 /* UIViewExtensions.swift */; };
 		99D7E87A1F535B830080E904 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D7E8791F535B830080E904 /* SettingsViewController.swift */; };
+		99E070591F796E700080F264 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E070581F796E700080F264 /* HelpViewController.swift */; };
 		99ECEAA61D47F963006EFCB7 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99ECEAA51D47F963006EFCB7 /* SongCell.swift */; };
 		99ECEAA81D480688006EFCB7 /* SongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99ECEAA71D480688006EFCB7 /* SongController.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		99B44AEB1F4B6014008DB0B5 /* CenteredButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredButton.swift; sourceTree = "<group>"; };
 		99B44AF21F4B771A008DB0B5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		99D7E8791F535B830080E904 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		99E070581F796E700080F264 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		99ECEAA51D47F963006EFCB7 /* SongCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		99ECEAA71D480688006EFCB7 /* SongController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +219,7 @@
 			children = (
 				998D78211F532C38007B9980 /* QuickSearch.swift */,
 				99D7E8791F535B830080E904 /* SettingsViewController.swift */,
+				99E070581F796E700080F264 /* HelpViewController.swift */,
 				997104EB1F5346C1005570D9 /* AboutViewController.swift */,
 				993130ED1F5B09D400BCE0EB /* EasterEggPhotoViewController.swift */,
 				993130EF1F5B0B3D00BCE0EB /* EasterEggPhotoCollectionViewController.swift */,
@@ -313,6 +316,7 @@
 				993EE03C1F5C76F200F90E84 /* SHViewController.swift in Sources */,
 				999945CB1F4CC897005BC9DC /* UIButtonExtensions.swift in Sources */,
 				998832E21F53847700770F6B /* SHNotification.swift in Sources */,
+				99E070591F796E700080F264 /* HelpViewController.swift in Sources */,
 				99B44AF31F4B771A008DB0B5 /* UIViewExtensions.swift in Sources */,
 				991D52191F2E7C9300E0C1F8 /* spevnik.xcdatamodeld in Sources */,
 				99090D1B1D47E7C900A9E2A4 /* SongsController.swift in Sources */,
