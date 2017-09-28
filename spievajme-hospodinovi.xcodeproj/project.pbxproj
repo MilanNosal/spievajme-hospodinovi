@@ -39,7 +39,6 @@
 		999654841D47F597001ED726 /* SongStoreCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999654831D47F597001ED726 /* SongStoreCoreData.swift */; };
 		999945CB1F4CC897005BC9DC /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999945CA1F4CC897005BC9DC /* UIButtonExtensions.swift */; };
 		999945CD1F4CC8EA005BC9DC /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999945CC1F4CC8EA005BC9DC /* UIImageExtensions.swift */; };
-		99B44AEC1F4B6014008DB0B5 /* CenteredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B44AEB1F4B6014008DB0B5 /* CenteredButton.swift */; };
 		99B44AF31F4B771A008DB0B5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B44AF21F4B771A008DB0B5 /* UIViewExtensions.swift */; };
 		99D7E87A1F535B830080E904 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D7E8791F535B830080E904 /* SettingsViewController.swift */; };
 		99E070591F796E700080F264 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E070581F796E700080F264 /* HelpViewController.swift */; };
@@ -82,7 +81,6 @@
 		999654831D47F597001ED726 /* SongStoreCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongStoreCoreData.swift; sourceTree = "<group>"; };
 		999945CA1F4CC897005BC9DC /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		999945CC1F4CC8EA005BC9DC /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
-		99B44AEB1F4B6014008DB0B5 /* CenteredButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredButton.swift; sourceTree = "<group>"; };
 		99B44AF21F4B771A008DB0B5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		99D7E8791F535B830080E904 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		99E070581F796E700080F264 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 				998FDD7E1F2DF7A3007204C6 /* ArrayExtensions.swift */,
 				998FDD801F2DF7BE007204C6 /* NSLayoutConstraintExtensions.swift */,
 				993A49911F2E7BD60001F93A /* ManagedObject.swift */,
-				99B44AEB1F4B6014008DB0B5 /* CenteredButton.swift */,
 				99B44AF21F4B771A008DB0B5 /* UIViewExtensions.swift */,
 				999945CA1F4CC897005BC9DC /* UIButtonExtensions.swift */,
 				999945CC1F4CC8EA005BC9DC /* UIImageExtensions.swift */,
@@ -325,7 +322,6 @@
 				9921429E1F2F96020061F895 /* Line.swift in Sources */,
 				99ECEAA61D47F963006EFCB7 /* SongCell.swift in Sources */,
 				993EE03E1F5C78C300F90E84 /* SHTableViewController.swift in Sources */,
-				99B44AEC1F4B6014008DB0B5 /* CenteredButton.swift in Sources */,
 				998FDD7F1F2DF7A3007204C6 /* ArrayExtensions.swift in Sources */,
 				997FF6921F5751B7007C5622 /* SongModel.swift in Sources */,
 				99090D091D47DF7600A9E2A4 /* AppDelegate.swift in Sources */,
