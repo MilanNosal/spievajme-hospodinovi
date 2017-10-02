@@ -133,18 +133,17 @@ class SongsController: SHTableViewController {
     
     func filterSongs(searchString: String?) {
         
-        var songs = self.songs
+        filteredSongs = self.songs
+        
         if favouritesOn {
-            songs = songs.filter({ $0.isFavourite })
+            filteredSongs = filteredSongs.filter({ $0.isFavourite })
         }
         
         if let searchString = searchString?.uppercased().folding(options: .diacriticInsensitive, locale: Locale.current), searchString != "" {
             filteredSongs = filteredSongs.filter({ $0.isAccepted(bySearchString: searchString) })
-        } else {
-            filteredSongs = songs
         }
-        tableView.reloadData()
         
+        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
