@@ -41,11 +41,6 @@ class SongsController: SHTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let lastSong = lastSong,
-            let indexOfLastSongInFiltered = filteredSongs.index(of: lastSong) {
-            tableView.selectRow(at: IndexPath(row: indexOfLastSongInFiltered, section: 0), animated: false, scrollPosition: .middle)
-        }
     }
     
     override func setupSettings() {
@@ -109,6 +104,7 @@ class SongsController: SHTableViewController {
             sender.image = emptyStar
         }
         filterSongs(searchString: searchController.searchBar.text)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
     }
     
     @objc fileprivate func showLastSong() {

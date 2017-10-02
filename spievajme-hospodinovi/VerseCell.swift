@@ -20,6 +20,8 @@ class VerseCell: UITableViewCell {
         }
     }
     
+    var isPortrait: Bool = false
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -64,10 +66,10 @@ class VerseCell: UITableViewCell {
     @objc override func setupFontScheme() {
         super.setupFontScheme()
         
-        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
-            verseLabel.font = Settings.currentFontScheme.verseTextFontLandscape
-        } else {
+        if isPortrait {
             verseLabel.font = Settings.currentFontScheme.verseTextFont
+        } else {
+            verseLabel.font = Settings.currentFontScheme.verseTextFontLandscape
         }
     }
 }

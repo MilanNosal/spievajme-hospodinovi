@@ -17,6 +17,7 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
     fileprivate let emptyStar = #imageLiteral(resourceName: "navigation_starEmpty").withRenderingMode(.alwaysTemplate)
     fileprivate let fullStar = #imageLiteral(resourceName: "navigation_starFilled").withRenderingMode(.alwaysTemplate)
     
+    fileprivate var isPortrait: Bool = false
     
     fileprivate var isFavourite = false {
         didSet {
@@ -142,9 +143,11 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let versesCount = songModel?.verses.count,
             indexPath.section == versesCount - 1,
             indexPath.row == 1 {
+            emptyCell.isPortrait = self.isPortrait
             return emptyCell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: VerseCell.identifier) as! VerseCell
+        cell.isPortrait = self.isPortrait
         cell.verse = songModel?.verses[indexPath.section].text ?? ""
         cell.setupFontScheme()
         return cell
@@ -154,9 +157,12 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.traitCollectionDidChange(previousTraitCollection)
         
         if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            self.isPortrait = false
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
+            self.isPortrait = true
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
+        tableView.reloadData()
     }
 }
