@@ -14,8 +14,8 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
     fileprivate let emptyCell = EmptyCell()
     
     fileprivate var favouriteButton: UIBarButtonItem?
-    fileprivate let emptyStar = #imageLiteral(resourceName: "navigation_starEmpty").withRenderingMode(.alwaysTemplate)
-    fileprivate let fullStar = #imageLiteral(resourceName: "navigation_starFilled").withRenderingMode(.alwaysTemplate)
+    fileprivate let notFavourite = #imageLiteral(resourceName: "navigation_emptyHeart").withRenderingMode(.alwaysTemplate)
+    fileprivate let favourite = #imageLiteral(resourceName: "navigation_fullHeart").withRenderingMode(.alwaysTemplate)
     
     fileprivate var isPortrait: Bool = false
     
@@ -72,7 +72,7 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        favouriteButton = UIBarButtonItem(image: emptyStar, style: .plain, target: self, action: #selector(favouriteSwitched))
+        favouriteButton = UIBarButtonItem(image: notFavourite, style: .plain, target: self, action: #selector(favouriteSwitched))
         navigationItem.rightBarButtonItem = favouriteButton
         
         tableView.register(VerseCell.self, forCellReuseIdentifier: VerseCell.identifier)
@@ -107,9 +107,9 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     fileprivate func updateIsFavourite() {
         if self.isFavourite {
-            favouriteButton?.image = fullStar
+            favouriteButton?.image = favourite
         } else {
-            favouriteButton?.image = emptyStar
+            favouriteButton?.image = notFavourite
         }
     }
     
@@ -136,6 +136,7 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
         let title = songModel?.verses[section].title ?? ""
         let view = VerseHeaderView()
         view.header = title
+        view.isPortrait = self.isPortrait
         return view
     }
     
@@ -154,7 +155,6 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
         if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
             self.isPortrait = false
@@ -163,6 +163,9 @@ class SongController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.isPortrait = true
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
         tableView.reloadData()
     }
 }

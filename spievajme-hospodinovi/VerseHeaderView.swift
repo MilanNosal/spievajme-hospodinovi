@@ -17,6 +17,8 @@ class VerseHeaderView: UIView, FontSensitive {
         }
     }
     
+    var isPortrait: Bool = false
+    
     init() {
         super.init(frame: CGRect.zero)
         setupInitialHierarchy()
@@ -52,10 +54,10 @@ class VerseHeaderView: UIView, FontSensitive {
     }
     
     func setupFontScheme() {
-        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
-            headerLabel.font = Settings.currentFontScheme.verseTitleFontLandscape
-        } else {
+        if isPortrait {
             headerLabel.font = Settings.currentFontScheme.verseTitleFont
+        } else {
+            headerLabel.font = Settings.currentFontScheme.verseTitleFontLandscape
         }
     }
 }

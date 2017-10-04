@@ -106,6 +106,7 @@ class SettingsViewController: SHTableViewController {
                 currentSongModel = SongModel(song: exampleSong)
                 verseCell.verse = currentSongModel.verses.first?.text
                 verseCell.setupFontScheme()
+                verseCell.isPortrait = true
                 return verseCell
             }
             fatalError()

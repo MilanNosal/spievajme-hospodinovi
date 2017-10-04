@@ -18,8 +18,8 @@ class SongsController: SHTableViewController {
     fileprivate var filteredSongs: [Song] = []
     fileprivate var favouritesOn: Bool = false
     
-    fileprivate let emptyStar = #imageLiteral(resourceName: "toolbar_starEmpty").withRenderingMode(.alwaysTemplate)
-    fileprivate let fullStar = #imageLiteral(resourceName: "toolbar_starFilled").withRenderingMode(.alwaysTemplate)
+    fileprivate let allWithFavourite = #imageLiteral(resourceName: "toolbar_emptyHeart").withRenderingMode(.alwaysTemplate)
+    fileprivate let onlyFavourite = #imageLiteral(resourceName: "toolbar_fullHeart").withRenderingMode(.alwaysTemplate)
     fileprivate var lastSong: Song?
     
     fileprivate var lastSongButton: UIBarButtonItem!
@@ -83,7 +83,7 @@ class SongsController: SHTableViewController {
         
         let search = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_searchThiner").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(searchSelected))
         let quickSearch = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_numpadEmpty").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(quickSearchPressed))
-        let favourites = UIBarButtonItem(image: emptyStar, style: .plain, target: self, action: #selector(switchFavourites(_:)))
+        let favourites = UIBarButtonItem(image: allWithFavourite, style: .plain, target: self, action: #selector(switchFavourites(_:)))
         lastSongButton = UIBarButtonItem(image: #imageLiteral(resourceName: "toolbar_lastSong").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(showLastSong))
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -99,12 +99,14 @@ class SongsController: SHTableViewController {
     @objc fileprivate func switchFavourites(_ sender: UIBarButtonItem) {
         favouritesOn = !favouritesOn
         if favouritesOn {
-            sender.image = fullStar
+            sender.image = onlyFavourite
         } else {
-            sender.image = emptyStar
+            sender.image = allWithFavourite
         }
         filterSongs(searchString: searchController.searchBar.text)
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        if !filteredSongs.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
     }
     
     @objc fileprivate func showLastSong() {
