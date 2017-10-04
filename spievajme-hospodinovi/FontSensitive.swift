@@ -13,6 +13,6 @@ protocol FontSensitive {
 }
 
 extension UITableViewCell: FontSensitive {
-    func setupFontScheme() {
+    @objc func setupFontScheme() {
     }
 }
