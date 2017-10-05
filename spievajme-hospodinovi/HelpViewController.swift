@@ -12,8 +12,8 @@ class HelpViewController: UITableViewController {
     
     fileprivate let iconDescriptions: [IconControlHelpCell] = [
         IconControlHelpCell(icon: #imageLiteral(resourceName: "navigation_settingsEmpty"), comment: "Tlačidlo otvorí nastavenia aplikácie."),
-        IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_starFilled"), comment: "Vyplnená hviezda pri obrazovke s piesňou označuje obľúbenú pieseň. V hlavnej obrazovke indikuje zapnutý filter obľúbených piesní - pri zapnutí tohto filtra sú zobrazené iba piesne, ktoré si označil za svoje obľúbené."),
-        IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_starEmpty"), comment: "Jej stlačenie v obrazovke s piesňou danú pieseň označí ako obľúbenú. V hlavnej obrazovke indikuje vypnutý filter obľúbených piesní."),
+        IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_fullHeart"), comment: "Vyplnené srdce pri obrazovke s piesňou označuje obľúbenú pieseň. V hlavnej obrazovke indikuje zapnutý filter obľúbených piesní - pri zapnutí tohto filtra sú zobrazené iba piesne, ktoré si označil za svoje obľúbené."),
+        IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_emptyHeart"), comment: "Jeho stlačenie v obrazovke s piesňou danú pieseň označí ako obľúbenú. V hlavnej obrazovke indikuje vypnutý filter obľúbených piesní."),
         IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_searchThiner"), comment: "Tlačidlo slúži ako skratka do políčka 'Hľadať' v hlavnej obrazovke. Slúži ako filter piesní podľa zadaného textu. Pomocou tohto nástroja si môžeš nájsť pieseň podľa jej textu."),
         IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_numpadEmpty"), comment: "Ikona číselnej klávesnice slúži na rýchlu navigáciu na konkrétnu pieseň. Jej stlačenie ti otvorí dialógové okno, do ktorého môžeš zadať číslo piesne a priamo ju otvoriť."),
         IconControlHelpCell(icon: #imageLiteral(resourceName: "toolbar_lastSong"), comment: "Tlačidlo 'Späť' ti otvorí posledne otvorenú pieseň."),
@@ -85,8 +85,8 @@ extension HelpViewController {
             iconView.translatesAutoresizingMaskIntoConstraints = false
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             [
-                iconView.heightAnchor.constraint(equalToConstant: 50),
-                iconView.widthAnchor.constraint(equalToConstant: 50),
+                iconView.heightAnchor.constraint(equalToConstant: 40),
+                iconView.widthAnchor.constraint(equalToConstant: 40),
                 iconView.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor, constant: 0),
                 iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
                 iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).with(priority: UILayoutPriority(rawValue: 150)),

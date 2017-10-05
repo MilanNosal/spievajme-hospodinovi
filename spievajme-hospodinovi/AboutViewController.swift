@@ -14,7 +14,7 @@ class AboutViewController: SHTableViewController {
     
     fileprivate let author: (key: String, value: String) = (key: "Kontakt", value: "milan.nosal@gmail.com")
     
-    fileprivate let version: (key: String, value: String) = (key: "Verzia", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)")
+    fileprivate let version: (key: String, value: String) = (key: "Verzia", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String) (\(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String))")
     
     override func viewDidLoad() {
         super.viewDidLoad()
