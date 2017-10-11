@@ -13,14 +13,7 @@ class EasterEggPhotoCollectionViewController: UIViewController {
     
     fileprivate let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
-    fileprivate let photoControllers = [EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_1")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_2")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_3")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_4")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_5")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_6")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_7")),
-                                        EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_8")),
+    fileprivate let photoControllers = [
                                         EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_9")),
                                         EasterEggPhotoViewController(photo: #imageLiteral(resourceName: "Tonik_10"))]
     
