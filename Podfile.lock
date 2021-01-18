@@ -1,0 +1,30 @@
+PODS:
+  - Kingfisher (6.0.1)
+  - PKHUD (5.3.0)
+  - Realm (5.5.0):
+    - Realm/Headers (= 5.5.0)
+  - Realm/Headers (5.5.0)
+  - RealmSwift (5.5.0):
+    - Realm (= 5.5.0)
+
+DEPENDENCIES:
+  - Kingfisher
+  - PKHUD
+  - RealmSwift (~> 5.5.0)
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
+    - PKHUD
+    - Realm
+    - RealmSwift
+
+SPEC CHECKSUMS:
+  Kingfisher: adde87a4f74f6a3845395769354efff593581740
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  Realm: fb399d76f44042e5cdfc630f33828fdb4d077345
+  RealmSwift: 3b7e62356207ef16d34de4e55d475163bd2062bb
+
+PODFILE CHECKSUM: 98289ca443f5902364d6e531a2de2bc6fd4da879
+
+COCOAPODS: 1.10.0
